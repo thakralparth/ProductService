@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
     private RestTemplateBuilder restTemplateBuilder;//who'll create the object --> Spring
@@ -25,10 +28,12 @@ public class FakeStoreProductService implements ProductService{
         genericProductDto.setImage(fakeStoreProductDto.getImage());
         genericProductDto.setPrice(fakeStoreProductDto.getPrice());
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
+
         return genericProductDto;
     }
 
-    private String getProductUrl = "https://fakestoreapi.com/products/1";
+    private String getProductUrl = "https://fakestoreapi.com/products/{id}";
+    private String getAllProductsUrl = "https://fakestoreapi.com/products";
     @Override
     public GenericProductDto getProductById(Long id) {
         //Integrate the fakestore api
@@ -36,7 +41,7 @@ public class FakeStoreProductService implements ProductService{
 
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> responseEntity =
-                restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class);
+                restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class,id);
 
 
         GenericProductDto genericProductDto = convertToGenericProductDto(responseEntity.getBody());
@@ -47,8 +52,29 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public void getAllProducts() {
+    public List<GenericProductDto> getAllProducts() {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+//        ResponseEntity<List<FakeStoreProductDto>> =
+//        restTemplate.getForEntity(getAllProductsUrl,List<FakeStoreProductDto>.class)
 
+        //ArrayList<Integer> -> here Integer is a compile time check,
+        //Java is a backward compatible language , Generics was introduced in Java 5.
+        //AT runtime the response we get is of type ArrayList.class (whereas the return-type is ArrayList<FakeStoreProductDto>)
+        // so, instead we use simple Array
+
+        //ArrayList<Integer> => ArrayList.class  -> Erasure
+
+        ResponseEntity<FakeStoreProductDto[]> responseEntity =
+        restTemplate.getForEntity(getAllProductsUrl,FakeStoreProductDto[].class);
+
+        List<GenericProductDto> result = new ArrayList<>();
+        List<FakeStoreProductDto> fakeStoreProductDtos = List.of(responseEntity.getBody());
+        for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
+            result.add(convertToGenericProductDto(fakeStoreProductDto));
+        }
+
+        return result;
+//        return null;
     }
 
     @Override

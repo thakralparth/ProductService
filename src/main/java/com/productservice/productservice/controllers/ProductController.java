@@ -6,6 +6,8 @@ import com.productservice.productservice.dtos.GenericProductDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController //1. we need object of this class at runtime (PRE-INITIALIZED)
 //2. rest -- BECAUSE IT CONTAINS REST APIs
 @RequestMapping("/products")  // all rest apis hosted at root mapping
@@ -34,8 +36,8 @@ public class ProductController {
     }
 //    @GetMapping("/products")
     @GetMapping
-    public void getAllProducts(){
-
+    public List<GenericProductDto> getAllProducts(){
+        return productService.getAllProducts();
     }
 //    @DeleteMapping("/products/{id}")
     @DeleteMapping("/{id}")

@@ -3,6 +3,8 @@ package com.productservice.productservice.Services;
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
 
+import java.util.List;
+
 public interface ProductService {
     //Why Product Service is an Interface
     //1. Need object of Product Service in Product COntroller , so to avoid DI.
@@ -11,7 +13,7 @@ public interface ProductService {
 
       GenericProductDto getProductById(Long id);
 
-     void getAllProducts();
+     List<GenericProductDto> getAllProducts();
 
      void deleteProductById();
 
