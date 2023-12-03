@@ -32,8 +32,8 @@ public class FakeStoreProductService implements ProductService{
         return genericProductDto;
     }
 
-    private String getProductUrl = "https://fakestoreapi.com/products/{id}";
-    private String getAllProductsUrl = "https://fakestoreapi.com/products";
+    private String specificProductUrl = "https://fakestoreapi.com/products/{id}";
+    private String genericProductUrl = "https://fakestoreapi.com/products";
     @Override
     public GenericProductDto getProductById(Long id) {
         //Integrate the fakestore api
@@ -41,7 +41,7 @@ public class FakeStoreProductService implements ProductService{
 
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> responseEntity =
-                restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class,id);
+                restTemplate.getForEntity(specificProductUrl, FakeStoreProductDto.class,id);
 
 
         GenericProductDto genericProductDto = convertToGenericProductDto(responseEntity.getBody());
@@ -65,7 +65,7 @@ public class FakeStoreProductService implements ProductService{
         //ArrayList<Integer> => ArrayList.class  -> Erasure
 
         ResponseEntity<FakeStoreProductDto[]> responseEntity =
-        restTemplate.getForEntity(getAllProductsUrl,FakeStoreProductDto[].class);
+        restTemplate.getForEntity(genericProductUrl,FakeStoreProductDto[].class);
 
         List<GenericProductDto> result = new ArrayList<>();
         List<FakeStoreProductDto> fakeStoreProductDtos = List.of(responseEntity.getBody());
@@ -83,8 +83,14 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public void createProduct() {
+    public GenericProductDto createProduct(GenericProductDto genericProductDto) {
+//    return null;
+        RestTemplate restTemplate =restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDto> responseEntity=
+        restTemplate.postForEntity(genericProductUrl,genericProductDto, FakeStoreProductDto.class);
 
+        return convertToGenericProductDto(responseEntity.getBody());
+        
     }
 
     @Override

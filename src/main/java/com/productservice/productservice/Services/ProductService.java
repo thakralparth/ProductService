@@ -17,7 +17,7 @@ public interface ProductService {
 
      void deleteProductById();
 
-     void createProduct();
+     GenericProductDto createProduct(GenericProductDto genericProductDto);
 
      void updateProductById();
 }

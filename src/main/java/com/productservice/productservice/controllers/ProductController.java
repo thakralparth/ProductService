@@ -45,8 +45,9 @@ public class ProductController {
 
     }
 
-    public void createProduct(){
-
+    @PostMapping
+    public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto){
+        return productService.createProduct(genericProductDto);
     }
 
     public void updateProductById(){
