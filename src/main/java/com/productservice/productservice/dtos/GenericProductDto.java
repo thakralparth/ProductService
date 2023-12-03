@@ -3,12 +3,9 @@ package com.productservice.productservice.dtos;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class FakeStoreProductDto {
-    // DTO -data transfer object --> it is user to transfer data b/w backend and the client
-    // // Here as Product is a model and if there is any attribute that is added to the response, then we can't change the database (model) for any changes
-
+@Setter
+public class GenericProductDto {
     private Long id;
     private String title;
     private int price;

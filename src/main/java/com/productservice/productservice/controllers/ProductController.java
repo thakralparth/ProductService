@@ -1,6 +1,8 @@
 package com.productservice.productservice.controllers;
 
 import com.productservice.productservice.Services.ProductService;
+import com.productservice.productservice.dtos.FakeStoreProductDto;
+import com.productservice.productservice.dtos.GenericProductDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class ProductController {
     //@Autowired
 //    @GetMapping("/products/{id}")
     @GetMapping("/{id}")
-    public String getProductById(@PathVariable("id") Long id){ //this id we will have to pick from path of URL
+    public GenericProductDto getProductById(@PathVariable("id") Long id){ //this id we will have to pick from path of URL
         //Call the FakeStoreProductService getProductById() method.
 
         //return "Productssss fetched with id: " +id;
