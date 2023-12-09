@@ -19,5 +19,5 @@ public interface ProductService {
 
      GenericProductDto createProduct(GenericProductDto genericProductDto);
 
-     void updateProductById();
+     GenericProductDto updateProductById(Long id, GenericProductDto genericProductDto);
 }
