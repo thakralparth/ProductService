@@ -1,8 +1,8 @@
 package com.productservice.productservice.controllers;
 
 import com.productservice.productservice.Services.ProductService;
-import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
+import com.productservice.productservice.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +27,7 @@ public class ProductController {
     //@Autowired
 //    @GetMapping("/products/{id}")
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id){ //this id we will have to pick from path of URL
+    public GenericProductDto getProductById(@PathVariable("id") Long id) throws ProductNotFoundException { //this id we will have to pick from path of URL
         //Call the FakeStoreProductService getProductById() method.
 
         //return "Productssss fetched with id: " +id;
@@ -54,6 +54,23 @@ public class ProductController {
     public GenericProductDto updateProductById(@PathVariable("id") Long id,@RequestBody GenericProductDto genericProductDto){
         return productService.updateProductById(id,genericProductDto);
     }
+
+
+    // if any method of controller returns ProductNotFoundException this method should trigger
+//    @ExceptionHandler(ProductNotFoundException.class)
+//    private ResponseEntity<ExceptionDto> handleProductNotFoundException(ProductNotFoundException productNotFoundException){
+////        System.out.println("Got Product not found exception");
+//        ExceptionDto exceptionDto = new ExceptionDto();
+//        exceptionDto.setMessage(productNotFoundException.getMessage());
+//        exceptionDto.setHttpStatus(HttpStatus.NOT_FOUND);
+////        System.out.println("Got Product not found exception");
+//
+////        return exceptionDto;
+//
+//        ResponseEntity<ExceptionDto> responseEntity = new ResponseEntity(exceptionDto,HttpStatus.NOT_FOUND);
+//        return responseEntity;
+//    }
+
 
 
 
