@@ -3,6 +3,7 @@ package com.productservice.productservice.thirdPartyClients.fakestoreclient;
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,22 @@ import java.util.List;
 public class FakeStoreClientAdapter {
     private RestTemplateBuilder restTemplateBuilder;//who'll create the object --> Spring
 
-    FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder){
+
+//    @Value("${fakestore.api.url}")
+    private String fakeStoreUrl;
+
+//    @Value("${fakestore.api.paths.products}")
+    private String pathForProducts;
+
+    private String specificProductUrl ;
+    private String genericProductUrl ;
+
+    FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder,
+                           @Value("${fakestore.api.url}") String fakeStoreUrl,
+                           @Value("${fakestore.api.paths.products}")String pathForProducts){
         this.restTemplateBuilder= restTemplateBuilder;
+        this.genericProductUrl =fakeStoreUrl +pathForProducts;
+        this.specificProductUrl =fakeStoreUrl +pathForProducts + "/{id}";
     }
 
 //    private static GenericProductDto convertToGenericProductDto(FakeStoreProductDto fakeStoreProductDto){
@@ -34,8 +49,6 @@ public class FakeStoreClientAdapter {
 //        return genericProductDto;
 //    }
 
-    private String specificProductUrl = "https://fakestoreapi.com/products/{id}";
-    private String genericProductUrl = "https://fakestoreapi.com/products";
 
     public FakeStoreProductDto getProductById(Long id) throws ProductNotFoundException {
         //Integrate the fakestore api
