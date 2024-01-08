@@ -19,12 +19,12 @@ public class Product extends BaseModel{
     private String image;
 
     //Category isn't a primitive attribute, its a relation
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @ManyToOne(cascade = {jakarta.persistence.CascadeType.PERSIST})
+    @JoinColumn
     private Category category;
 
-    @OneToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @OneToOne(cascade = {jakarta.persistence.CascadeType.REMOVE, jakarta.persistence.CascadeType.PERSIST})
+    @JoinColumn(unique = true)
     private Price price;
 
 }

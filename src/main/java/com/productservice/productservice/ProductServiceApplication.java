@@ -143,23 +143,23 @@ public class ProductServiceApplication implements CommandLineRunner {
         // Now we have marked price and category as mandatory
         // SO to create a product, we first need price and category object
 
-        Price price = new Price();
-        price.setCurrency("INR");
-        price.setValue(100000);
+//        Price price = new Price();
+//        price.setCurrency("INR");
+//        price.setValue(100000);
+//
+//        Price savedPrice = priceRepository.save(price);
+//
+//        Category category = new Category();
+//        category.setName("Apple Devices");
+//        Category savedCategory = categoryRepository.save(category);
+//
+//        Product product = new Product();
+//        product.setTitle("iPhone 15 Pro");
+//        product.setDescription("Best iphone ever");
+//        product.setCategory(savedCategory);
+//        product.setPrice(savedPrice);
 
-        Price savedPrice = priceRepository.save(price);
-
-        Category category = new Category();
-        category.setName("Apple Devices");
-        Category savedCategory = categoryRepository.save(category);
-
-        Product product = new Product();
-        product.setTitle("iPhone 15 Pro");
-        product.setDescription("Best iphone ever");
-        product.setCategory(savedCategory);
-        product.setPrice(savedPrice);
-
-        Product savedProduct = productRepository.save(product);
+//        Product savedProduct = productRepository.save(product);
 
 
         //Now what if try to delete the above price
@@ -167,7 +167,37 @@ public class ProductServiceApplication implements CommandLineRunner {
         // so we'll have to delete teh product first
 
 
+        // But if we remove the dependency , unmark price and category as mandatory,
+        //then we can delete product while the price still exists
+        // but that price is of no significance
 
+        //CASCADING
+        // therefore we use CASCADE  as REMOVE on Price attr in Product class
+        // which will remove the price also if product is removed
+
+//        productRepository.deleteById(UUID.fromString("a51d2af7-8a2f-4db3-b848-d07995340363"));
+        //priceRepository.deleteById(UUID.fromString("5469b12d-2665-4f02-acd2-cb5d63593528"));
+
+
+        // PERSIST CASCADING
+
+        Price price = new Price();
+        price.setCurrency("INR");
+        price.setValue(100000);
+
+//        Price savedPrice = priceRepository.save(price);
+
+        Category category = new Category();
+        category.setName("Apple Devices");
+//        Category savedCategory = categoryRepository.save(category);
+
+        Product product = new Product();
+        product.setTitle("iPhone 15 Pro");
+        product.setDescription("Best iphone ever");
+        product.setCategory(category);
+        product.setPrice(price);
+
+        Product savedProduct = productRepository.save(product);
 
 
     }
