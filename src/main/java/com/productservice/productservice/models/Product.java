@@ -4,13 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product extends BaseModel{
 //    private Long id;
     private String title;
@@ -19,7 +19,7 @@ public class Product extends BaseModel{
     private String image;
 
     //Category isn't a primitive attribute, its a relation
-    @ManyToOne(cascade = {jakarta.persistence.CascadeType.PERSIST})
+    @ManyToOne
     @JoinColumn
     private Category category;
 

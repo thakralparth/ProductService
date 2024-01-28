@@ -7,6 +7,7 @@ import com.productservice.productservice.models.Product;
 import com.productservice.productservice.repositories.CategoryRepository;
 import com.productservice.productservice.repositories.PriceRepository;
 import com.productservice.productservice.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -42,7 +43,7 @@ public class ProductServiceApplication implements CommandLineRunner {
         SpringApplication.run(ProductServiceApplication.class, args);
     }
 
-
+    @Transactional
     @Override
     public void run(String... args) throws Exception {
 //        Mentor mentor = new Mentor();
@@ -179,26 +180,99 @@ public class ProductServiceApplication implements CommandLineRunner {
         //priceRepository.deleteById(UUID.fromString("5469b12d-2665-4f02-acd2-cb5d63593528"));
 
 
+
+
         // PERSIST CASCADING
 
-        Price price = new Price();
-        price.setCurrency("INR");
-        price.setValue(100000);
+//        Price price = new Price();
+//        price.setCurrency("INR");
+//        price.setValue(100000);
+//
+////        Price savedPrice = priceRepository.save(price);
+//
+//        Category category = new Category();
+//        category.setName("Apple Devices");
+////        Category savedCategory = categoryRepository.save(category);
+//
+//        Product product = new Product();
+//        product.setTitle("iPhone 15 Pro");
+//        product.setDescription("Best iphone ever");
+//        product.setCategory(category);
+//        product.setPrice(price);
+//
+//        Product savedProduct = productRepository.save(product);
 
-//        Price savedPrice = priceRepository.save(price);
-
-        Category category = new Category();
-        category.setName("Apple Devices");
+//        Category category = new Category();
+//        category.setName("Apple Devices");
 //        Category savedCategory = categoryRepository.save(category);
+//
+//        Price price = new Price();
+//        price.setValue(150000);
+//        price.setCurrency("INR");
+//
+//        Product product = new Product();
+//        product.setPrice(price);
+//        product.setTitle("iphone 15 Pro MAX");
+//        product.setDescription("Best iphone ever");
+//        product.setImage("IMG");
+//        product.setCategory(savedCategory);
+//        Product savedProduct = productRepository.save(product);
+//
+//
+//        Price price1 = new Price();
+//        price1.setValue(120000);
+//        price1.setCurrency("INR");
+//
+//        Product product1 = new Product();
+//        product1.setPrice(price1);
+//        product1.setTitle("iphone 15 Pro");
+//        product1.setDescription("Best iphone ever");
+//        product1.setImage("IMG");
+//        product1.setCategory(savedCategory);
+//        Product savedProduct1 = productRepository.save(product1);
+//
+//
+//        Price price2 = new Price();
+//        price2.setValue(100000);
+//        price2.setCurrency("INR");
+//
+//        Product product2 = new Product();
+//        product2.setPrice(price2);
+//        product2.setTitle("iphone 15");
+//        product2.setDescription("Best iphone ever");
+//        product2.setImage("IMG");
+//        product2.setCategory(savedCategory);
+//        Product savedProduct2 = productRepository.save(product2);
 
-        Product product = new Product();
-        product.setTitle("iPhone 15 Pro");
-        product.setDescription("Best iphone ever");
-        product.setCategory(category);
-        product.setPrice(price);
 
-        Product savedProduct = productRepository.save(product);
+//        Optional<Category> usedCategory = categoryRepository.findById(UUID.fromString("930619b4-3b2c-41c2-b613-951de67997a8"));
+//
+//        Category category = usedCategory.get();
+//
+//        List<Product> products = category.getProducts();
+//
+//        for(Product product : products){
+//            System.out.println(product.getTitle());
+//        }
 
 
+        // Th above 4 statements should be a single transaction , only then in LAZY loading we weill be able to get all products
+
+
+
+
+
+        //JPA Queries
+//        List<Product> products = productRepository.findAll();
+
+//        List<Product> products = productRepository.findAllByTitle("iphone 15 Pro MAX");
+
+//        List<Product> products = productRepository.findAllByTitleAndDescription("iphone 15 Pro MAX", "Best iphone ever")
+
+//        List<Product> products = productRepository.findAllByPrice_ValueGreaterThan(100000);
+
+        List<Product> products = productRepository.findAllByPrice_ValueBetween(90000,120000);
     }
+
+
 }

@@ -16,7 +16,7 @@ public class Category extends BaseModel{
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(fetch = jakarta.persistence.FetchType.EAGER, mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     private List<Product> products;  // fetch type - lazy or eager -> if we need underlying objects of Category then mark those underlying attr. as eager
 
 }
