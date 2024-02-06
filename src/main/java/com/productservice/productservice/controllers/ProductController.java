@@ -18,7 +18,8 @@ public class ProductController {
     //COnstructor Injection
     //To create an object of Controller we need object of Service
     // we never create object by ourself in Spring Application (therefore @Service)
-    ProductController(@Qualifier("fakeStoreProductService") ProductService productService){ //Spring can get confuse here which class to put hence Qualifier
+//    @Qualifier("fakeStoreProductService")
+    ProductController( ProductService productService){ //Spring can get confuse here which class to put hence Qualifier
         this.productService = productService;
     }
 

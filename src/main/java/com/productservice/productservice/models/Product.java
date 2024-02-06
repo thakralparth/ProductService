@@ -26,6 +26,7 @@ public class Product extends BaseModel{
     @OneToOne(cascade = {jakarta.persistence.CascadeType.REMOVE, jakarta.persistence.CascadeType.PERSIST})
     @JoinColumn(unique = true)
     private Price price;
+    private int inventoryCount;
 
 }
 
