@@ -33,6 +33,14 @@ public class ProductController {
 
         //return "Productssss fetched with id: " +id;
 
+
+        //Custom Logic for Testing
+//        GenericProductDto genericProductDto = productService.getProductById(id);
+//
+//        GenericProductDto genericProductDto1 = new GenericProductDto();
+//        return genericProductDto1;
+
+
         return productService.getProductById(id);
     }
 //    @GetMapping("/products")
