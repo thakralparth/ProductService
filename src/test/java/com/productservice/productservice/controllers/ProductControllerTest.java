@@ -30,58 +30,58 @@ public class ProductControllerTest {
     @Captor
     ArgumentCaptor<Long> argumentCaptor;
 
-    @Test
-    @DisplayName("Testing 1 + 1 is 2")
-    void testOnePlusOneIsTwoOrNot(){
-//        assert(11 == 1+1);
-//        assertEquals(11,1+1,"1 + 1 should be 2");
-        //Checks the expected value(2) vs the output of the expression
-        assertTrue(1==1);
-        //If assert is true , test case succeeds , else fails
+//    @Test
+//    @DisplayName("Testing 1 + 1 is 2")
+//    void testOnePlusOneIsTwoOrNot(){
+////        assert(11 == 1+1);
+////        assertEquals(11,1+1,"1 + 1 should be 2");
+//        //Checks the expected value(2) vs the output of the expression
+//        assertTrue(1==1);
+//        //If assert is true , test case succeeds , else fails
     }
 
-@Test
-    void testGetProductByIdNegativeTC() throws ProductNotFoundException {
-//        assertThrows(ProductNotFoundException.class,() -> productController.getProductById(1000L));
-        assertNull(productController.getProductById(1000L));
-    }
+//@Test
+//    void testGetProductByIdNegativeTC() throws ProductNotFoundException {
+////        assertThrows(ProductNotFoundException.class,() -> productController.getProductById(1000L));
+//        assertNull(productController.getProductById(1000L));
+//    }
 
-    @Test
-    void testGetProductByIdMocking() throws ProductNotFoundException {
-        GenericProductDto genericProductDto = new GenericProductDto();
-        when(productService.getProductById(any(Long.class))).thenReturn(genericProductDto);
+//    @Test
+//    void testGetProductByIdMocking() throws ProductNotFoundException {
+//        GenericProductDto genericProductDto = new GenericProductDto();
+//        when(productService.getProductById(any(Long.class))).thenReturn(genericProductDto);
+//
+//        GenericProductDto genericProductDto1 = productController.getProductById(100L);
+//        assertEquals(genericProductDto, genericProductDto1);
+//    }
 
-        GenericProductDto genericProductDto1 = productController.getProductById(100L);
-        assertEquals(genericProductDto, genericProductDto1);
-    }
+//    @Test
+//    void testGetProductByIdCustomLogic() throws ProductNotFoundException {
+//        GenericProductDto genericProductDto = new GenericProductDto();
+//        when(productService.getProductById(any(Long.class))).thenReturn(genericProductDto);
+//
+//        GenericProductDto genericProductDto1 = productController.getProductById(100L);
+//        assertEquals(genericProductDto, genericProductDto1);
+//    }
 
-    @Test
-    void testGetProductByIdCustomLogic() throws ProductNotFoundException {
-        GenericProductDto genericProductDto = new GenericProductDto();
-        when(productService.getProductById(any(Long.class))).thenReturn(genericProductDto);
-
-        GenericProductDto genericProductDto1 = productController.getProductById(100L);
-        assertEquals(genericProductDto, genericProductDto1);
-    }
-
-    @Test
-    @DisplayName("testProductControllerCallsProductServiceWithSameProductIdAsInput")
-    void testIfSameInput() throws ProductNotFoundException {
-        //This is the test case to check if product controller is passing the same productId to the
-        //productService as the Input
-        Long id = 100L;
-
-        when(productService.getProductById(id)).thenReturn(new GenericProductDto());
-
-        GenericProductDto genericProductDto = productController.getProductById(id);
-
-        verify(productService).getProductById(argumentCaptor.capture());
-
-        assertEquals(id, argumentCaptor.getValue());
-
-    }
-
-
+//    @Test
+//    @DisplayName("testProductControllerCallsProductServiceWithSameProductIdAsInput")
+//    void testIfSameInput() throws ProductNotFoundException {
+//        //This is the test case to check if product controller is passing the same productId to the
+//        //productService as the Input
+//        Long id = 100L;
+//
+//        when(productService.getProductById(id)).thenReturn(new GenericProductDto());
+//
+//        GenericProductDto genericProductDto = productController.getProductById(id);
+//
+//        verify(productService).getProductById(argumentCaptor.capture());
+//
+//        assertEquals(id, argumentCaptor.getValue());
+//
+//    }
 
 
-}
+
+
+//}

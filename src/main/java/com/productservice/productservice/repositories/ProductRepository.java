@@ -1,6 +1,7 @@
 package com.productservice.productservice.repositories;
 
 import com.productservice.productservice.models.Product;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,8 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     List<Product> findAll();  // Get all the products from Product table
 
     List<Product> findAllByTitle(String Title);
+
+    List<Product> findAllByTitleContainingIgnoreCase(String Title, Pageable pageable);// for whatever db call we need paging we send request as this
 
     List<Product> findAllByTitleAndDescription(String title, String desc);
 

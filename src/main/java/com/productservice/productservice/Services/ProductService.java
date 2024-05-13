@@ -12,7 +12,7 @@ public interface ProductService {
     //2. Currently we'll use fakestore APIs for imple of DB,apis. But later we can have more
     //than one implementation
 
-      GenericProductDto getProductById(Long id) throws ProductNotFoundException;
+      GenericProductDto getProductById(String authToken,Long id) throws ProductNotFoundException;
 
      List<GenericProductDto> getAllProducts();
 

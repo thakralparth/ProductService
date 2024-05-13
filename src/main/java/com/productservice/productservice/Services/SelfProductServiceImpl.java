@@ -22,7 +22,7 @@ public class SelfProductServiceImpl implements ProductService{
     }
 
     @Override
-    public GenericProductDto getProductById(Long id) throws ProductNotFoundException {
+    public GenericProductDto getProductById(String authToken,Long id) throws ProductNotFoundException {
 
         //Make a DB call and get the product with given ID.
         GenericProductDto genericProductDto = new GenericProductDto();

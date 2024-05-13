@@ -3,19 +3,29 @@ package com.productservice.productservice.Services;
 import com.productservice.productservice.dtos.FakeStoreProductDto;
 import com.productservice.productservice.dtos.GenericProductDto;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
+import com.productservice.productservice.security.JWTObject;
+import com.productservice.productservice.security.TokenValidator;
 import com.productservice.productservice.thirdPartyClients.fakestoreclient.FakeStoreClientAdapter;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+//@Primary
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 
     private FakeStoreClientAdapter fakeStoreAdapter;
-    FakeStoreProductService(FakeStoreClientAdapter fakeStoreAdapter){
+    private TokenValidator tokenValidator;
+    FakeStoreProductService(FakeStoreClientAdapter fakeStoreAdapter, TokenValidator tokenValidator){
         this.fakeStoreAdapter = fakeStoreAdapter;
+        this.tokenValidator = tokenValidator;
     }
     private static GenericProductDto convertToGenericProductDto(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto = new GenericProductDto();
@@ -34,12 +44,26 @@ public class FakeStoreProductService implements ProductService{
 //    private String specificProductUrl = "https://fakestoreapi.com/products/{id}";
 //    private String genericProductUrl = "https://fakestoreapi.com/products";
     @Override
-    public GenericProductDto getProductById(Long id) throws ProductNotFoundException {
+    public GenericProductDto getProductById(String authToken,Long id) throws ProductNotFoundException {
         //Integrate the fakestore api
         //RestTemplate --can help you to make the call to external systems
+        System.out.println(authToken);
+
+        Optional<JWTObject> jwtObjectOptional = tokenValidator.validateToken(authToken);
+
+        if(jwtObjectOptional.isEmpty()){
+            throw new ProductNotFoundException("Invalid Token");
+        }
+
+        JWTObject jwtObject = jwtObjectOptional.get();
+        String userId = jwtObject.getUserId();
+
+//        if(specialIDs.isPresent(id)  && !userId.equals("admin")){
+//            throw new ProductNotFoundException("Product with id :"+ id + " not found!");
+//        }
 
         return convertToGenericProductDto(fakeStoreAdapter.getProductById(id));
-
+////      private RestTemplateBuilder restTemplateBuilder;
 //        RestTemplate restTemplate = restTemplateBuilder.build();
 //        ResponseEntity<FakeStoreProductDto> responseEntity =
 //                restTemplate.getForEntity(specificProductUrl, FakeStoreProductDto.class,id);

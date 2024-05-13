@@ -4,6 +4,7 @@ import com.productservice.productservice.Services.ProductService;
 import com.productservice.productservice.dtos.GenericProductDto;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,20 +29,21 @@ public class ProductController {
     //@Autowired
 //    @GetMapping("/products/{id}")
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id) throws ProductNotFoundException { //this id we will have to pick from path of URL
+    public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @PathVariable("id") Long id) throws ProductNotFoundException { //this id we will have to pick from path of URL
         //Call the FakeStoreProductService getProductById() method.
 
         //return "Productssss fetched with id: " +id;
 
 
         //Custom Logic for Testing
-//        GenericProductDto genericProductDto = productService.getProductById(id);
+        GenericProductDto genericProductDto = productService.getProductById(authToken,id);
+        return genericProductDto;
 //
 //        GenericProductDto genericProductDto1 = new GenericProductDto();
 //        return genericProductDto1;
 
 
-        return productService.getProductById(id);
+//        return productService.getProductById(id);
     }
 //    @GetMapping("/products")
     @GetMapping
